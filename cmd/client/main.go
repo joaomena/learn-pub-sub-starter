@@ -47,5 +47,36 @@ func main() {
 			return
 		default:
 		}
+
+		gamestate := gamelogic.NewGameState(username)
+
+		userInput := gamelogic.GetInput()
+		if len(userInput) == 0 {
+			continue
+		}
+
+		switch userInput[0] {
+		case "spawn":
+			gamestate.CommandSpawn(userInput)
+		case "move":
+			_, err := gamestate.CommandMove(userInput)
+			if err != nil {
+				fmt.Println("Error while moving: %v. Please try again...", err)
+				continue
+			}
+			fmt.Println("Moved successfully")
+		case "status":
+			gamestate.CommandStatus()
+		case "help":
+			gamelogic.PrintClientHelp()
+		case "spam":
+			fmt.Println("Spamming not allowed yet.")
+		case "quit":
+			gamelogic.PrintQuit()
+			return
+		default:
+			fmt.Println("Invalid command.")
+			continue
+		}
 	}
 }

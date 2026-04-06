@@ -32,7 +32,6 @@ func main() {
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
-	defer fmt.Println("Received exit signal, bye!")
 
 	mainCh, err := conn.Channel()
 	if err != nil {
@@ -44,6 +43,7 @@ func main() {
 	for {
 		select {
 		case <-ctx.Done():
+			fmt.Println("Received exit signal, bye!")
 			return
 		default:
 		}
