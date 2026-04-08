@@ -40,6 +40,10 @@ func main() {
 	}
 	defer mainCh.Close()
 
+	mainCh, topic, err := pubsub.DeclareAndBind(conn, routing.ExchangePerilTopic, "game_logs", "game_logs.*", pubsub.Durable)
+
+	fmt.Printf("Topic created: %s\n", topic.Name)
+
 	for {
 		select {
 		case <-ctx.Done():
